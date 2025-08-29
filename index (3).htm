@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Actualización de Datos</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding-top: 90px;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(24, 119, 242, 0.9);
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    header span {
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      opacity: 0.9;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      width: 95%;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1877f2;
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #1877f2;
+      outline: none;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-primary {
+      background: #1877f2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #145dbf;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.4s ease;
+    }
+
+    .step.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .progress {
+      height: 6px;
+      background: #ddd;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #1877f2;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header {
+        font-size: 16px;
+        padding: 12px 5px;
+      }
+      .form-container {
+        padding: 15px;
+        width: 90%;
+      }
+      h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+   Actualizacion de datos 
+    <span>Asesor: Miguel Romero</span>
+  </header>
+
+  <div class="form-container">
+    <h2>Formulario</h2>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+    <form id="actualizacionForm">
+
+      <!-- STEP 1 -->
+      <div class="step active">
+        <label>Nombre del Cliente:</label>
+        <input type="text" name="Nombre del Cliente" required>
+        <label>Número de Identidad:</label>
+        <input type="text" name="Número de Identidad" required>
+        <label>Correo Personal:</label>
+        <input type="email" name="Correo Personal" required>
+        <label>Dirección de su Casa:</label>
+        <textarea name="Dirección Casa" required></textarea>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <label>Teléfono de su Casa:</label>
+        <input type="text" name="Teléfono Casa" required>
+        <label>Número de Celular:</label>
+        <input type="text" name="Celular" required>
+        <label>Lugar de Trabajo:</label>
+        <input type="text" name="Lugar Trabajo" required>
+        <label>Cargo:</label>
+        <input type="text" name="Cargo" required>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <label>Dirección del Trabajo:</label>
+        <textarea name="Dirección Trabajo" required></textarea>
+        
+        <label>Ingreso Mensual:</label>
+        <input type="text" name="Ingreso Mensual" required>
+        <label>Antigüedad Laboral (Años):</label>
+        <input type="number" name="Años" required>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step">
+        <label>Referencia Familiar:</label>
+        <input type="text" name="Referencia Familiar" required>
+        <label>Teléfono Ref. Familiar:</label>
+        <input type="text" name="Teléfono Ref Familiar" required>
+        <label>Amistad:</label>
+        <input type="text" name="Amistad" required>
+        <label>Teléfono Amistad:</label>
+        <input type="text" name="Teléfono Amistad" required>
+      </div>
+
+      <!-- BOTONES -->
+      <div>
+        <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)">Atrás</button>
+        <button type="button" class="btn btn-primary hidden" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let currentStep = 0;
+    let steps = document.querySelectorAll(".step");
+    let progressBar = document.getElementById("progressBar");
+    let nextBtn = document.getElementById("nextBtn");
+    let prevBtn = document.getElementById("prevBtn");
+
+    showStep(currentStep);
+
+    function showStep(n) {
+      steps.forEach((step, i) => step.classList.remove("active"));
+      steps[n].classList.add("active");
+
+      prevBtn.classList.toggle("hidden", n === 0);
+      validateInputs();
+
+      let progress = ((n + 1) / steps.length) * 100;
+      progressBar.style.width = progress + "%";
+
+      nextBtn.innerText = (n === steps.length - 1) ? "Enviar por WhatsApp" : "Siguiente";
+    }
+
+    function nextPrev(n) {
+      if (n === 1 && !validateForm()) return;
+      currentStep += n;
+      if (currentStep >= steps.length) {
+        enviarWhatsApp();
+        return;
+      }
+      showStep(currentStep);
+    }
+
+    function validateForm() {
+      let inputs = steps[currentStep].querySelectorAll("input, select, textarea");
+      for (let input of inputs) {
+        if (input.hasAttribute("required") && input.value === "") {
+          input.style.borderColor = "red";
+          return false;
+        } else {
+          input.style.borderColor = "#ccc";
+        }
+      }
+      return true;
+    }
+
+    function validateInputs() {
+      let inputs = steps[currentStep].querySelectorAll("input, select, textarea");
+      let allFilled = true;
+      inputs.forEach(input => {
+        if (input.hasAttribute("required") && input.value === "") allFilled = false;
+        input.addEventListener("input", validateInputs);
+        input.addEventListener("change", validateInputs);
+      });
+      nextBtn.classList.toggle("hidden", !allFilled);
+    }
+
+    function enviarWhatsApp() {
+      let form = document.getElementById("actualizacionForm");
+      let data = new FormData(form);
+      let mensaje = "📋 *Registro de Actualización de Datos*%0A%0A";
+      data.forEach((value, key) => {
+        if (value) mensaje += `*${key}:* ${value}%0A`;
+      });
+      let numero = "50489776523"; // <-- tu número de WhatsApp
+      let url = `https://wa.me/${numero}?text=${mensaje}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
