@@ -1,376 +1,212 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Formulario para actualizar datos personales de manera segura y eficiente.">
-  <meta name="author" content="xAI">
-  <meta property="og:title" content="Actualización de Datos Personales">
-  <meta property="og:description" content="Formulario interactivo para registrar y actualizar información personal.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Actualización+de+Datos">
-  <meta property="og:url" content="URL_DEL_FORMULARIO">
-  <title>Registro de Actualización de Datos</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-    :root {
-      --primary-color: #1a73e8;
-      --secondary-color: #0d47a1;
-      --accent-color: #34c759;
-      --text-color: #1c2526;
-      --background-color: #f5f7fa;
-      --card-background: #ffffff;
-      --shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      --border-radius: 16px;
-      --transition: all 0.3s ease-in-out;
-      --error-color: #d32f2f;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--background-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding-top: 120px;
-      min-height: 100vh;
-    }
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      text-align: center;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-    }
-    header h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 8px; }
-    header span { font-size: 1rem; font-weight: 400; opacity: 0.9; display: block; }
-    .form-container {
-      background: var(--card-background);
-      padding: 30px;
-      border-radius: var(--border-radius);
-      width: 95%;
-      max-width: 650px;
-      margin: 30px auto;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    h2 { text-align: center; color: var(--primary-color); font-size: 2rem; font-weight: 600; margin-bottom: 25px; }
-    .progress-container { position: relative; margin-bottom: 30px; }
-    .progress { height: 10px; background: #e8ecef; border-radius: 5px; overflow: hidden; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); width: 0; transition: width 0.4s ease; }
-    .step-indicator { display: flex; justify-content: space-between; margin-bottom: 15px; }
-    .step-indicator span {
-      width: 40px; height: 40px;
-      background: #e8ecef;
-      color: #6c757d;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-    .step-indicator span.active { background: var(--primary-color); color: white; transform: scale(1.1); }
-    label { display: block; margin: 15px 0 8px; font-weight: 500; font-size: 1rem; color: var(--text-color); }
-    input, select, textarea {
-      width: 100%; padding: 14px; border: 1px solid #dfe1e5; border-radius: 10px; font-size: 1rem; font-family: 'Poppins', sans-serif;
-      transition: var(--transition); background: #fafafa;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary-color);
-      background: white;
-      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15);
-      outline: none;
-    }
-    textarea { resize: vertical; min-height: 100px; }
-    .btn { display: inline-block; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); width: 48%; margin: 15px 1%; }
-    .btn-primary { background: var(--primary-color); color: white; }
-    .btn-primary:hover { background: var(--secondary-color); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }
-    .btn-primary:disabled { background: #b0bec5; cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn-secondary { background: #e8ecef; color: var(--text-color); }
-    .btn-secondary:hover { background: #dfe1e5; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-    .hidden { display: none !important; }
-    .step { display: none; opacity: 0; transform: translateY(15px); transition: var(--transition); }
-    .step.active { display: block; opacity: 1; transform: translateY(0); }
-    .error { border-color: var(--error-color) !important; }
-    .error-message { color: var(--error-color); font-size: 0.9rem; margin-top: 6px; display: none; font-weight: 400; }
-    .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
-    }
-    .modal.active { display: flex; opacity: 1; }
-    .modal-content {
-      background: var(--card-background); padding: 20px; border-radius: var(--border-radius); max-width: 500px; width: 90%; box-shadow: var(--shadow);
-      transform: translateY(-50px); transition: transform 0.3s ease; text-align: center;
-    }
-    .modal.active .modal-content { transform: translateY(0); }
-    .modal-content h3 { color: var(--error-color); font-size: 1.5rem; margin-bottom: 15px; }
-    .modal-content p { color: var(--text-color); font-size: 1rem; margin-bottom: 10px; }
-    .modal-content ul { text-align: left; margin-bottom: 20px; padding-left: 20px; }
-    .modal-content ul li { color: var(--error-color); font-size: 0.95rem; margin-bottom: 8px; }
-    .modal-content button { background: var(--primary-color); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
-    .modal-content button:hover { background: var(--secondary-color); transform: translateY(-2px); }
-    @media (max-width: 600px) {
-      header { padding: 15px; }
-      header h1 { font-size: 1.5rem; }
-      .form-container { padding: 20px; width: 90%; }
-      .btn { width: 100%; margin: 10px 0; }
-      .step-indicator span { width: 35px; height: 35px; font-size: 0.9rem; }
-      .modal-content { width: 95%; padding: 15px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Actualización de Datos</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+  :root {
+    --primary-color: #1a73e8;
+    --secondary-color: #0d47a1;
+    --accent-color: #34c759;
+    --text-color: #1c2526;
+    --background-color: #f5f7fa;
+    --card-background: #ffffff;
+    --shadow: 0 6px 20px rgba(0,0,0,0.1);
+    --border-radius: 16px;
+    --transition: all 0.3s ease-in-out;
+    --error-color: #d32f2f;
+  }
+
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family:'Poppins',sans-serif; background:var(--background-color); color:var(--text-color); padding-top:120px; transition: background 0.3s; }
+
+  header {
+    position:fixed; top:0; left:0; width:100%;
+    background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));
+    color:white; text-align:center; padding:20px;
+    box-shadow:var(--shadow); z-index:1000;
+  }
+
+  header h1 { font-size:1.8rem; margin-bottom:5px; }
+  header span { font-size:0.95rem; opacity:0.85; }
+
+  .form-container {
+    background:var(--card-background); padding:30px;
+    border-radius:var(--border-radius); width:95%; max-width:650px;
+    margin:30px auto; box-shadow:var(--shadow); position:relative;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  h2 { text-align:center; color:var(--primary-color); margin-bottom:25px; }
+
+  .progress-container {
+    margin-bottom:25px;
+  }
+
+  .progress {
+    height:10px; background:#e8ecef; border-radius:5px; overflow:hidden; margin-bottom:10px;
+  }
+
+  .progress-bar {
+    height:100%; background:linear-gradient(90deg,var(--primary-color),var(--accent-color)); width:0; transition: width 0.4s ease;
+  }
+
+  .step { display:none; opacity:0; transform:translateY(15px); transition:var(--transition); }
+  .step.active { display:block; opacity:1; transform:translateY(0); }
+
+  label { display:block; margin:15px 0 8px; font-weight:500; }
+  input, textarea { width:100%; padding:14px; border:1px solid #dfe1e5; border-radius:10px; margin-bottom:10px; font-size:1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+  input:focus, textarea:focus { border-color:var(--primary-color); box-shadow:0 0 0 4px rgba(26,115,232,0.15); outline:none; }
+
+  .btn { padding:14px; border:none; border-radius:10px; cursor:pointer; width:48%; margin:15px 1%; font-weight:600; transition:transform 0.2s, box-shadow 0.2s; }
+  .btn-primary { background:var(--primary-color); color:white; }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+  .btn-secondary { background:#e8ecef; color:var(--text-color); }
+  .btn-secondary:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+
+  .hidden { display:none !important; }
+
+  /* Modal de carga */
+  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; z-index:2000; }
+  .modal.active { display:flex; opacity:1; }
+  .modal-content {
+    background:var(--card-background); padding:25px; border-radius:var(--border-radius);
+    text-align:center; box-shadow:var(--shadow); animation:fadeInUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    0% { transform:translateY(30px); opacity:0; }
+    100% { transform:translateY(0); opacity:1; }
+  }
+
+  @media (max-width:600px){
+    .btn { width:100%; margin:10px 0; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Actualización de Datos</h1>
-    <span>Asesor: Miguel Romero</span>
-  </header>
+<header>
+  <h1>Actualización de Datos</h1>
+  <span>Asesor: Miguel Romero</span>
+</header>
 
-  <div class="form-container">
-    <h2>Actualizacion</h2>
-    <div class="progress-container">
-      <div class="step-indicator" id="stepIndicator">
-        <span class="active">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-      </div>
-      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-    </div>
+<div class="form-container">
+  <h2>Formulario de Actualización</h2>
 
-    <form id="actualizacionForm">
-      <!-- STEP 1 -->
-      <div class="step active">
-        <label for="nombreCliente">Nombre del Cliente:</label>
-        <input type="text" id="nombreCliente" name="Nombre del Cliente" required placeholder="Ingrese su nombre completo">
-        <div class="error-message" id="error-nombreCliente">Por favor, ingrese su nombre.</div>
-
-        <label for="numeroIdentidad">Número de Identidad:</label>
-        <input type="text" id="numeroIdentidad" name="Número de Identidad" required placeholder="Ej. 0801-1990-12345">
-        <div class="error-message" id="error-numeroIdentidad">Por favor, ingrese su número de identidad.</div>
-
-        <label for="correoPersonal">Correo Personal:</label>
-        <input type="email" id="correoPersonal" name="Correo Personal" required placeholder="Ej. ejemplo@correo.com">
-        <div class="error-message" id="error-correoPersonal">Por favor, ingrese un correo válido.</div>
-
-        <label for="direccionCasa">Dirección de su Casa:</label>
-        <textarea id="direccionCasa" name="Dirección Casa" required placeholder="Ingrese su dirección completa"></textarea>
-        <div class="error-message" id="error-direccionCasa">Por favor, ingrese su dirección.</div>
-      </div>
-
-      <!-- STEP 2 -->
-      <div class="step">
-        <label for="telefonoCasa">Teléfono de su Casa:</label>
-        <input type="tel" id="telefonoCasa" name="Teléfono Casa" required placeholder="Ej. +504 2222-3333">
-        <div class="error-message" id="error-telefonoCasa">Por favor, ingrese su número de teléfono.</div>
-
-        <label for="celular">Número de Celular:</label>
-        <input type="tel" id="celular" name="Celular" required placeholder="Ej. +504 9999-8888">
-        <div class="error-message" id="error-celular">Por favor, ingrese su número de celular.</div>
-
-        <label for="lugarTrabajo">Lugar de Trabajo:</label>
-        <input type="text" id="lugarTrabajo" name="Lugar Trabajo" required placeholder="Ej. Empresa XYZ">
-        <div class="error-message" id="error-lugarTrabajo">Por favor, ingrese su lugar de trabajo.</div>
-
-        <label for="cargo">Cargo:</label>
-        <input type="text" id="cargo" name="Cargo" required placeholder="Ej. Gerente de Ventas">
-        <div class="error-message" id="error-cargo">Por favor, ingrese su cargo.</div>
-      </div>
-
-      <!-- STEP 3 -->
-      <div class="step">
-        <label for="direccionTrabajo">Dirección del Trabajo:</label>
-        <textarea id="direccionTrabajo" name="Dirección Trabajo" required placeholder="Ingrese la dirección de su trabajo"></textarea>
-        <div class="error-message" id="error-direccionTrabajo">Por favor, ingrese la dirección de su trabajo.</div>
-
-        <label for="ingresoMensual">Ingreso Mensual:</label>
-        <input type="number" id="ingresoMensual" name="Ingreso Mensual" required min="0" placeholder="Ej. 25000">
-        <div class="error-message" id="error-ingresoMensual">Por favor, ingrese su ingreso mensual.</div>
-
-        <label for="antiguedadLaboral">Antigüedad Laboral (Años):</label>
-        <input type="number" id="antiguedadLaboral" name="Años" required min="0" placeholder="Ej. 5">
-        <div class="error-message" id="error-antiguedadLaboral">Por favor, ingrese su antigüedad laboral.</div>
-      </div>
-
-      <!-- STEP 4 -->
-      <div class="step">
-        <label for="referenciaFamiliar">Referencia Familiar:</label>
-        <input type="text" id="referenciaFamiliar" name="Referencia Familiar" required placeholder="Ej. Juan Pérez">
-        <div class="error-message" id="error-referenciaFamiliar">Por favor, ingrese una referencia familiar.</div>
-
-        <label for="telefonoRefFamiliar">Teléfono Ref. Familiar:</label>
-        <input type="tel" id="telefonoRefFamiliar" name="Teléfono Ref Familiar" required placeholder="Ej. +504 7777-6666">
-        <div class="error-message" id="error-telefonoRefFamiliar">Por favor, ingrese el teléfono de la referencia familiar.</div>
-
-        <label for="amistad">Amistad:</label>
-        <input type="text" id="amistad" name="Amistad" required placeholder="Ej. María Gómez">
-        <div class="error-message" id="error-amistad">Por favor, ingrese una referencia de amistad.</div>
-
-        <label for="telefonoAmistad">Teléfono Amistad:</label>
-        <input type="tel" id="telefonoAmistad" name="Teléfono Amistad" required placeholder="Ej. +504 5555-4444">
-        <div class="error-message" id="error-telefonoAmistad">Por favor, ingrese el teléfono de la referencia de amistad.</div>
-      </div>
-
-      <!-- BUTTONS -->
-      <div class="button-group">
-        <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)">Atrás</button>
-        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Modal for Errors -->
-  <div class="modal" id="errorModal">
-    <div class="modal-content">
-      <h3>Error en el formulario</h3>
-      <p>Por favor, corrige los siguientes errores:</p>
-      <ul id="errorList"></ul>
-      <button onclick="closeModal()">Cerrar</button>
+  <div class="progress-container">
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
   </div>
 
-  <script>
-    let currentStep = 0;
-    let steps = document.querySelectorAll(".step");
-    let progressBar = document.getElementById("progressBar");
-    let stepIndicators = document.querySelectorAll(".step-indicator span");
-    let nextBtn = document.getElementById("nextBtn");
-    let prevBtn = document.getElementById("prevBtn");
-    let errorModal = document.getElementById("errorModal");
-    let errorList = document.getElementById("errorList");
+  <form id="actualizacionForm">
+    <!-- STEP 1 -->
+    <div class="step active">
+      <label>Nombre del Cliente:</label><input type="text" name="Nombre del Cliente" required>
+      <label>Número de Identidad:</label><input type="text" name="Número de Identidad" required>
+      <label>Correo Personal:</label><input type="email" name="Correo Personal" required>
+      <label>Dirección Casa:</label><textarea name="Dirección Casa" required></textarea>
+    </div>
 
-    function initializeValidation() {
-      steps.forEach(step => {
-        let inputs = step.querySelectorAll("input, select, textarea");
-        inputs.forEach(input => {
-          input.removeEventListener("input", validateInputs);
-          input.addEventListener("input", validateInputs);
-        });
-      });
-    }
+    <!-- STEP 2 -->
+    <div class="step">
+      <label>Teléfono Casa:</label><input type="tel" name="Teléfono Casa" required>
+      <label>Celular:</label><input type="tel" name="Celular" required>
+      <label>Lugar Trabajo:</label><input type="text" name="Lugar Trabajo" required>
+      <label>Cargo:</label><input type="text" name="Cargo" required>
+    </div>
 
-    function showStep(n) {
-      steps.forEach((step, i) => step.classList.remove("active"));
-      steps[n].classList.add("active");
+    <!-- STEP 3 -->
+    <div class="step">
+      <label>Dirección Trabajo:</label><textarea name="Dirección Trabajo" required></textarea>
+      <label>Ingreso Mensual:</label><input type="number" name="Ingreso Mensual" required>
+      <label>Antigüedad Laboral (Años):</label><input type="number" name="Años" required>
+    </div>
 
-      stepIndicators.forEach((indicator, i) => {
-        indicator.classList.toggle("active", i <= n);
-      });
+    <!-- STEP 4 -->
+    <div class="step">
+      <label>Referencia Familiar:</label><input type="text" name="Referencia Familiar" required>
+      <label>Teléfono Ref Familiar:</label><input type="tel" name="Teléfono Ref Familiar" required>
+      <label>Amistad:</label><input type="text" name="Amistad" required>
+      <label>Teléfono Amistad:</label><input type="tel" name="Teléfono Amistad" required>
+    </div>
 
-      prevBtn.classList.toggle("hidden", n === 0);
-      nextBtn.classList.remove("hidden");
-      validateInputs();
+    <div class="button-group">
+      <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)">Atrás</button>
+      <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+    </div>
+  </form>
+</div>
 
-      let progress = ((n + 1) / steps.length) * 100;
-      progressBar.style.width = progress + "%";
+<div id="loadingScreen" class="modal">
+  <div class="modal-content">
+    <h3>Enviando datos...</h3>
+    <p>Por favor espere</p>
+  </div>
+</div>
 
-      nextBtn.innerText = n === steps.length - 1 ? "Enviar por WhatsApp" : "Siguiente";
-    }
+<script>
+let currentStep=0;
+let steps=document.querySelectorAll(".step");
+let nextBtn=document.getElementById("nextBtn");
+let prevBtn=document.getElementById("prevBtn");
+let progressBar=document.getElementById("progressBar");
+let loadingScreen=document.getElementById("loadingScreen");
 
-    function validateForm() {
-      let inputs = steps[currentStep].querySelectorAll("input, select, textarea");
-      let isValid = true;
-      let errors = [];
+function showStep(n){
+  steps.forEach((s,i)=>s.classList.remove("active"));
+  steps[n].classList.add("active");
+  prevBtn.classList.toggle("hidden", n===0);
+  nextBtn.innerText = n===steps.length-1 ? "Enviar por WhatsApp" : "Siguiente";
+  progressBar.style.width = ((n+1)/steps.length*100) + "%";
+}
 
-      inputs.forEach(input => {
-        const errorMessage = document.getElementById(`error-${input.id}`);
-        const label = document.querySelector(`label[for="${input.id}"]`)?.textContent || input.name;
+function nextPrev(n){
+  let inputs=steps[currentStep].querySelectorAll("[required]");
+  for(let inp of inputs){ if(!inp.value.trim()){ alert("Por favor complete todos los campos"); return; } }
+  currentStep+=n;
+  if(currentStep>=steps.length){ enviarWhatsApp(); return; }
+  if(currentStep<0) currentStep=0;
+  showStep(currentStep);
+}
 
-        if (input.hasAttribute("required") && !input.value.trim()) {
-          input.classList.add("error");
-          if (errorMessage) errorMessage.style.display = "block";
-          errors.push(`${label} está vacío.`);
-          isValid = false;
-        } else if (input.type === "email" && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-          input.classList.add("error");
-          if (errorMessage) errorMessage.style.display = "block";
-          errors.push(`${label} no es un correo válido.`);
-          isValid = false;
-        } else if (input.type === "tel" && input.value && !/^\+?[\d\s-]{7,15}$/.test(input.value)) {
-          input.classList.add("error");
-          if (errorMessage) errorMessage.style.display = "block";
-          errors.push(`${label} no es un número de teléfono válido.`);
-          isValid = false;
-        } else {
-          input.classList.remove("error");
-          if (errorMessage) errorMessage.style.display = "none";
-        }
-      });
+function enviarWhatsApp(){
+  loadingScreen.classList.add("active");
+  let form=document.getElementById("actualizacionForm");
+  let data=new FormData(form);
 
-      return { isValid, errors };
-    }
+  let pasos = {
+    "Datos Personales":["Nombre del Cliente","Número de Identidad","Correo Personal","Dirección Casa"],
+    "Contacto":["Teléfono Casa","Celular","Lugar Trabajo","Cargo"],
+    "Laborales":["Dirección Trabajo","Ingreso Mensual","Años"],
+    "Referencias":["Referencia Familiar","Teléfono Ref Familiar","Amistad","Teléfono Amistad"]
+  };
 
-    function validateInputs() {
-      let inputs = steps[currentStep].querySelectorAll("input, select, textarea");
-      let allFilled = true;
-
-      inputs.forEach(input => {
-        if (input.hasAttribute("required") && !input.value.trim()) {
-          allFilled = false;
-        }
-      });
-
-      nextBtn.disabled = !allFilled;
-      nextBtn.style.opacity = allFilled ? "1" : "0.6";
-      nextBtn.style.cursor = allFilled ? "pointer" : "not-allowed";
-    }
-
-    function nextPrev(n) {
-      const { isValid, errors } = validateForm();
-      if (n === 1 && !isValid) {
-        showModal(errors);
-        return;
-      }
-      currentStep += n;
-      if (currentStep >= steps.length) {
-        enviarWhatsApp();
-        return;
-      }
-      if (currentStep < 0) currentStep = 0;
-      showStep(currentStep);
-    }
-
-    function showModal(errors) {
-      errorList.innerHTML = "";
-      errors.forEach(error => {
-        const li = document.createElement("li");
-        li.textContent = error;
-        errorList.appendChild(li);
-      });
-      errorModal.classList.add("active");
-    }
-
-    function closeModal() {
-      errorModal.classList.remove("active");
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && errorModal.classList.contains("active")) {
-        closeModal();
-      }
+  let mensaje="*Actualización de Datos:*\n\n";
+  for(let seccion in pasos){
+    mensaje+=`*${seccion}*\n`;
+    pasos[seccion].forEach(key=>{
+      let value=data.get(key);
+      if(value && value.trim()) mensaje+=`- ${key}: ${value}\n`;
     });
+    mensaje+="\n";
+  }
 
-    function enviarWhatsApp() {
-      let form = document.getElementById("actualizacionForm");
-      let data = new FormData(form);
-      let mensaje = "📋 *Actualización de Datos*%0A%0A";
-      data.forEach((value, key) => {
-        if (value.trim()) mensaje += `*${key}:* ${value}%0A`;
-      });
-      let numero = "50489776523";
-      let url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank");
-      console.log("Enviando datos por WhatsApp:", mensaje);
-    }
+  let numero="50489776523";
+  let url=`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 
-    initializeValidation();
-    showStep(currentStep);
-  </script>
+  setTimeout(()=>{
+    window.open(url,"_blank");
+    loadingScreen.classList.remove("active");
+    alert("✅ Datos enviados correctamente");
+    location.reload();
+  },1000);
+}
+
+showStep(currentStep);
+</script>
 </body>
 </html>
