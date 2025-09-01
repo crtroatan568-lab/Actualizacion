@@ -16,74 +16,261 @@
     --card-background: #ffffff;
     --shadow: 0 6px 20px rgba(0,0,0,0.1);
     --border-radius: 16px;
-    --transition: all 0.3s ease-in-out;
-    --error-color: #d32f2f;
   }
 
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family:'Poppins',sans-serif; background:var(--background-color); color:var(--text-color); padding-top:120px; transition: background 0.3s; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 20px;
+    padding-top: 140px;
+    min-height: 100vh;
+  }
 
   header {
-    position:fixed; top:0; left:0; width:100%;
-    background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));
-    color:white; text-align:center; padding:20px;
-    box-shadow:var(--shadow); z-index:1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    text-align: center;
+    padding: 15px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
   }
 
-  header h1 { font-size:1.8rem; margin-bottom:5px; }
-  header span { font-size:0.95rem; opacity:0.85; }
+  header h1 {
+    font-size: clamp(1.4rem, 5vw, 1.6rem);
+    margin: 0 0 5px;
+  }
+
+  header span {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+  }
 
   .form-container {
-    background:var(--card-background); padding:30px;
-    border-radius:var(--border-radius); width:95%; max-width:650px;
-    margin:30px auto; box-shadow:var(--shadow); position:relative;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    background: var(--card-background);
+    padding: clamp(20px, 5vw, 25px);
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: var(--shadow);
   }
 
-  h2 { text-align:center; color:var(--primary-color); margin-bottom:25px; }
-
-  .progress-container {
-    margin-bottom:25px;
+  h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
   }
 
   .progress {
-    height:10px; background:#e8ecef; border-radius:5px; overflow:hidden; margin-bottom:10px;
+    height: 8px;
+    background: #e8ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
   }
 
   .progress-bar {
-    height:100%; background:linear-gradient(90deg,var(--primary-color),var(--accent-color)); width:0; transition: width 0.4s ease;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    width: 0;
+    transition: width 0.4s ease;
   }
 
-  .step { display:none; opacity:0; transform:translateY(15px); transition:var(--transition); }
-  .step.active { display:block; opacity:1; transform:translateY(0); }
+  .step {
+    display: none;
+  }
 
-  label { display:block; margin:15px 0 8px; font-weight:500; }
-  input, textarea { width:100%; padding:14px; border:1px solid #dfe1e5; border-radius:10px; margin-bottom:10px; font-size:1rem; transition: border-color 0.3s, box-shadow 0.3s; }
-  input:focus, textarea:focus { border-color:var(--primary-color); box-shadow:0 0 0 4px rgba(26,115,232,0.15); outline:none; }
+  .step.active {
+    display: block;
+  }
 
-  .btn { padding:14px; border:none; border-radius:10px; cursor:pointer; width:48%; margin:15px 1%; font-weight:600; transition:transform 0.2s, box-shadow 0.2s; }
-  .btn-primary { background:var(--primary-color); color:white; }
-  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-  .btn-secondary { background:#e8ecef; color:var(--text-color); }
-  .btn-secondary:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+  }
 
-  .hidden { display:none !important; }
+  input,
+  textarea {
+    width: 100%;
+    padding: clamp(10px, 3vw, 12px);
+    border: 1px solid #dfe1e5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    box-sizing: border-box;
+  }
 
-  /* Modal de carga */
-  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; z-index:2000; }
-  .modal.active { display:flex; opacity:1; }
+  input:focus,
+  textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+    outline: none;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .inline-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .inline-input input {
+    width: clamp(60px, 15vw, 80px);
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: clamp(10px, 3vw, 12px);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 100px;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    transition: background 0.3s;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .btn-secondary {
+    background: #e8ecef;
+    color: var(--text-color);
+  }
+
+  .btn-primary:hover {
+    background: #1669c1;
+  }
+
+  .btn-secondary:hover {
+    background: #d0d4d9;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal.active {
+    display: flex;
+    opacity: 1;
+  }
+
   .modal-content {
-    background:var(--card-background); padding:25px; border-radius:var(--border-radius);
-    text-align:center; box-shadow:var(--shadow); animation:fadeInUp 0.5s ease forwards;
+    background: white;
+    padding: clamp(20px, 5vw, 25px);
+    border-radius: var(--border-radius);
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
   }
 
-  @keyframes fadeInUp {
-    0% { transform:translateY(30px); opacity:0; }
-    100% { transform:translateY(0); opacity:1; }
+  .modal.active .modal-content {
+    transform: scale(1);
   }
 
-  @media (max-width:600px){
-    .btn { width:100%; margin:10px 0; }
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: clamp(40px, 10vw, 50px);
+    height: clamp(40px, 10vw, 50px);
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 15px;
+      padding-top: 120px;
+    }
+
+    header {
+      padding: 10px;
+    }
+
+    .form-container {
+      padding: 15px;
+      margin: 15px auto;
+    }
+
+    .btn {
+      min-width: 80px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    header h1 {
+      font-size: 1.2rem;
+    }
+
+    header span {
+      font-size: 0.8rem;
+    }
+
+    .form-container {
+      padding: 10px;
+    }
+
+    input,
+    textarea {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
   }
 </style>
 </head>
@@ -96,114 +283,246 @@
 <div class="form-container">
   <h2>Formulario de Actualización</h2>
 
-  <div class="progress-container">
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
   </div>
 
   <form id="actualizacionForm">
     <!-- STEP 1 -->
     <div class="step active">
-      <label>Nombre del Cliente:</label><input type="text" name="Nombre del Cliente" required>
-      <label>Número de Identidad:</label><input type="text" name="Número de Identidad" required>
-      <label>Correo Personal:</label><input type="email" name="Correo Personal" required>
-      <label>Dirección Casa:</label><textarea name="Dirección Casa" required></textarea>
+      <label for="nombre">Tu Nombre:</label>
+      <input type="text" id="nombre" name="Nombre del Cliente" required maxlength="100">
+
+      <label for="identidad">Número de Identidad:</label>
+      <input type="text" 
+             id="identidad" 
+             name="Número de Identidad" 
+             inputmode="numeric" 
+             maxlength="15" 
+             required 
+             placeholder="0000-0000-00000"
+             pattern="\d{4}-\d{4}-\d{5}"
+             oninput="this.value = this.value
+               .replace(/[^0-9]/g, '')
+               .replace(/^(\d{4})(\d)/, '$1-$2')
+               .replace(/^(\d{4}-\d{4})(\d)/, '$1-$2')
+               .slice(0, 15);"
+             title="Formato: 0000-0000-00000">
+
+      <label for="correo">Correo Personal:</label>
+      <input type="email" id="correo" name="Correo Personal" required maxlength="100" placeholder="ejemplo@correo.com">
+
+      <label for="direccionCasa">Dirección Casa:</label>
+      <textarea id="direccionCasa" name="Dirección Casa" required maxlength="200"></textarea>
     </div>
 
     <!-- STEP 2 -->
     <div class="step">
-      <label>Teléfono Casa:</label><input type="tel" name="Teléfono Casa" required>
-      <label>Celular:</label><input type="tel" name="Celular" required>
-      <label>Lugar Trabajo:</label><input type="text" name="Lugar Trabajo" required>
-      <label>Cargo:</label><input type="text" name="Cargo" required>
+      <label for="celular">Tu Número Celular:</label>
+      <input type="tel" 
+             id="celular" 
+             name="Celular" 
+             inputmode="numeric" 
+             maxlength="9" 
+             required 
+             placeholder="9876-5432"
+             pattern="\d{4}-\d{4}"
+             oninput="this.value = this.value
+               .replace(/[^0-9]/g, '')
+               .replace(/^(\d{4})(\d)/, '$1-$2')
+               .slice(0, 9);"
+             title="Formato: 9876-5432">
+
+      <label for="trabajo">Lugar de Trabajo:</label>
+      <input type="text" id="trabajo" name="Lugar Trabajo" required maxlength="100">
+
+      <label for="cargo">Cargo:</label>
+      <input type="text" id="cargo" name="Cargo" required maxlength="100">
     </div>
 
     <!-- STEP 3 -->
     <div class="step">
-      <label>Dirección Trabajo:</label><textarea name="Dirección Trabajo" required></textarea>
-      <label>Ingreso Mensual:</label><input type="number" name="Ingreso Mensual" required>
-      <label>Antigüedad Laboral (Años):</label><input type="number" name="Años" required>
+      <label for="direccionTrabajo">Dirección Trabajo:</label>
+      <textarea id="direccionTrabajo" name="Dirección Trabajo" required maxlength="200"></textarea>
+
+      <label for="ingreso">Ingreso Mensual:</label>
+      <input type="number" id="ingreso" name="Ingreso Mensual" step="0.01" min="0" required placeholder="Ej: 15000.00">
+
+      <label for="antiguedad">Antigüedad Laboral:</label>
+      <div class="inline-input">
+        <input type="text" 
+               id="antiguedad" 
+               name="Años" 
+               inputmode="numeric" 
+               pattern="[0-9]{1,2}" 
+               maxlength="2" 
+               required 
+               placeholder="Ej: 5"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);"
+               title="Ingresa un número entre 0 y 99">
+        <span>Años</span>
+      </div>
     </div>
 
     <!-- STEP 4 -->
     <div class="step">
-      <label>Referencia Familiar:</label><input type="text" name="Referencia Familiar" required>
-      <label>Teléfono Ref Familiar:</label><input type="tel" name="Teléfono Ref Familiar" required>
-      <label>Amistad:</label><input type="text" name="Amistad" required>
-      <label>Teléfono Amistad:</label><input type="tel" name="Teléfono Amistad" required>
+      <label for="refFamiliar">Referencia Familiar:</label>
+      <input type="text" id="refFamiliar" name="Referencia Familiar" required maxlength="100">
+
+      <label for="telRefFamiliar">Celular Ref. Familiar:</label>
+      <input type="tel" 
+             id="telRefFamiliar" 
+             name="Teléfono Ref Familiar" 
+             inputmode="numeric" 
+             maxlength="9" 
+             required 
+             placeholder="9876-5432"
+             pattern="\d{4}-\d{4}"
+             oninput="this.value = this.value
+               .replace(/[^0-9]/g, '')
+               .replace(/^(\d{4})(\d)/, '$1-$2')
+               .slice(0, 9);"
+             title="Formato: 9876-5432">
+
+      <label for="amistad">Amistad:</label>
+      <input type="text" id="amistad" name="Amistad" required maxlength="100">
+
+      <label for="telAmistad">Celular de Amistad:</label>
+      <input type="tel" 
+             id="telAmistad" 
+             name="Teléfono Amistad" 
+             inputmode="numeric" 
+             maxlength="9" 
+             required 
+             placeholder="9876-5432"
+             pattern="\d{4}-\d{4}"
+             oninput="this.value = this.value
+               .replace(/[^0-9]/g, '')
+               .replace(/^(\d{4})(\d)/, '$1-$2')
+               .slice(0, 9);"
+             title="Formato: 9876-5432">
     </div>
 
     <div class="button-group">
-      <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)">Atrás</button>
-      <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+      <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)" aria-label="Volver al paso anterior">Atrás</button>
+      <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)" aria-label="Avanzar al siguiente paso o enviar">Siguiente</button>
     </div>
   </form>
 </div>
 
-<div id="loadingScreen" class="modal">
+<!-- Modal de carga -->
+<div id="loadingScreen" class="modal" aria-busy="true">
   <div class="modal-content">
     <h3>Enviando datos...</h3>
+    <div class="spinner"></div>
     <p>Por favor espere</p>
   </div>
 </div>
 
-<script>
-let currentStep=0;
-let steps=document.querySelectorAll(".step");
-let nextBtn=document.getElementById("nextBtn");
-let prevBtn=document.getElementById("prevBtn");
-let progressBar=document.getElementById("progressBar");
-let loadingScreen=document.getElementById("loadingScreen");
+<!-- Modal de éxito -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <h3>✅ Datos enviados</h3>
+    <p>El asesor continuará con el proceso y se contactará contigo.</p>
+    <button class="btn btn-primary" onclick="location.reload()" aria-label="Cerrar y reiniciar formulario">Cerrar</button>
+  </div>
+</div>
 
-function showStep(n){
-  steps.forEach((s,i)=>s.classList.remove("active"));
-  steps[n].classList.add("active");
-  prevBtn.classList.toggle("hidden", n===0);
-  nextBtn.innerText = n===steps.length-1 ? "Enviar por WhatsApp" : "Siguiente";
-  progressBar.style.width = ((n+1)/steps.length*100) + "%";
+<script>
+let currentStep = 0;
+let steps = document.querySelectorAll(".step");
+let nextBtn = document.getElementById("nextBtn");
+let prevBtn = document.getElementById("prevBtn");
+let progressBar = document.getElementById("progressBar");
+let loadingScreen = document.getElementById("loadingScreen");
+let successModal = document.getElementById("successModal");
+
+function showStep(n) {
+  steps.forEach((s, i) => s.classList.toggle("active", i === n));
+  prevBtn.classList.toggle("hidden", n === 0);
+  nextBtn.innerText = n === steps.length - 1 ? "Enviar" : "Siguiente";
+  progressBar.style.width = ((n + 1) / steps.length * 100) + "%";
 }
 
-function nextPrev(n){
-  let inputs=steps[currentStep].querySelectorAll("[required]");
-  for(let inp of inputs){ if(!inp.value.trim()){ alert("Por favor complete todos los campos"); return; } }
-  currentStep+=n;
-  if(currentStep>=steps.length){ enviarWhatsApp(); return; }
-  if(currentStep<0) currentStep=0;
+function nextPrev(n) {
+  let inputs = steps[currentStep].querySelectorAll("[required]");
+  for (let inp of inputs) {
+    if (!inp.checkValidity()) {
+      inp.reportValidity();
+      return;
+    }
+  }
+  currentStep += n;
+  if (currentStep >= steps.length) {
+    enviarDatos();
+    return;
+  }
+  if (currentStep < 0) currentStep = 0;
   showStep(currentStep);
 }
 
-function enviarWhatsApp(){
+function enviarDatos() {
   loadingScreen.classList.add("active");
-  let form=document.getElementById("actualizacionForm");
-  let data=new FormData(form);
+  let form = document.getElementById("actualizacionForm");
+  let data = new FormData(form);
+  let queryParams = [];
 
-  let pasos = {
-    "Datos Personales":["Nombre del Cliente","Número de Identidad","Correo Personal","Dirección Casa"],
-    "Contacto":["Teléfono Casa","Celular","Lugar Trabajo","Cargo"],
-    "Laborales":["Dirección Trabajo","Ingreso Mensual","Años"],
-    "Referencias":["Referencia Familiar","Teléfono Ref Familiar","Amistad","Teléfono Amistad"]
+  const pasos = {
+    "Datos Personales": ["Nombre del Cliente", "Número de Identidad", "Correo Personal", "Dirección Casa"],
+    "Contacto": ["Celular", "Lugar Trabajo", "Cargo"],
+    "Laborales": ["Dirección Trabajo", "Ingreso Mensual", "Años"],
+    "Referencias": ["Referencia Familiar", "Teléfono Ref Familiar", "Amistad", "Teléfono Amistad"]
   };
 
-  let mensaje="*Actualización de Datos:*\n\n";
-  for(let seccion in pasos){
-    mensaje+=`*${seccion}*\n`;
-    pasos[seccion].forEach(key=>{
-      let value=data.get(key);
-      if(value && value.trim()) mensaje+=`- ${key}: ${value}\n`;
+  for (let seccion in pasos) {
+    pasos[seccion].forEach(key => {
+      let value = data.get(key)?.trim();
+      if (value) {
+        queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+      }
     });
-    mensaje+="\n";
   }
 
-  let numero="50489776523";
-  let url=`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  const baseUrl = "https://script.google.com/macros/s/AKfycbyF3vloNSa5cGPlWSa5aZbDp__BOpqMWlR5dV7jImLkyu5cp1qobcu4ujxZAnaTnSfK8g/exec";
+  const url = `${baseUrl}?${queryParams.join('&')}`;
 
-  setTimeout(()=>{
-    window.open(url,"_blank");
+  if (url.length > 2000) {
     loadingScreen.classList.remove("active");
-    alert("✅ Datos enviados correctamente");
-    location.reload();
-  },1000);
+    alert("Error: Los datos son demasiado largos para enviar por GET. Por favor, reduce la longitud de los campos de texto.");
+    return;
+  }
+
+  fetch(url, {
+    method: "GET",
+    redirect: "follow"
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(result => {
+    console.log("Server response:", result);
+    if (result.status !== "success") {
+      throw new Error(result.message || "El servidor no confirmó el éxito del envío");
+    }
+    loadingScreen.classList.remove("active");
+    successModal.classList.add("active");
+  })
+  .catch(error => {
+    console.error("Error al enviar los datos:", error);
+    loadingScreen.classList.remove("active");
+    let errorMessage = "Error al enviar los datos: " + (error.message || "Intenta nuevamente.");
+    if (error.message.includes("403")) {
+      errorMessage = "Error al enviar los datos: El servidor rechazó la solicitud (problema de permisos).";
+    } else if (error.message.includes("404")) {
+      errorMessage = "Error al enviar los datos: El endpoint no fue encontrado.";
+    } else if (error.message.includes("network")) {
+      errorMessage = "Error al enviar los datos: Problema de conexión de red.";
+    }
+    alert(errorMessage);
+  });
 }
 
 showStep(currentStep);
