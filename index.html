@@ -328,7 +328,7 @@
 
         <!-- STEP 1: Datos Personales -->
         <div class="step">
-          <label for="nombre">Tu Nombre:</label>
+          <label for="nombre">Tu Nombre completo:</label>
           <input
             type="text"
             id="nombre"
@@ -336,7 +336,7 @@
             required
             maxlength="100"
           />
-          <label for="identidad">Número de Identidad:</label>
+          <label for="identidad">Tu número de Identidad:</label>
           <input
             type="text"
             id="identidad"
@@ -356,8 +356,9 @@
             required
             maxlength="100"
           />
-          <label for="direccionCasa">Dirección Casa:</label>
+          <label for="direccionCasa">Dirección Casa (especifica):</label>
           <textarea
+          placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Casa Gris."
             id="direccionCasa"
             name="Dirección Casa"
             required
@@ -381,6 +382,7 @@
           />
           <label for="trabajo">Lugar de Trabajo:</label>
           <input
+          placeholder="Nombre del negocio en que trabajas"
             type="text"
             id="trabajo"
             name="Lugar Trabajo"
@@ -388,13 +390,14 @@
             maxlength="100"
           />
           <label for="cargo">Cargo:</label>
-          <input type="text" id="cargo" name="Cargo" required maxlength="100" />
+          <input  placeholder="Ejem: Ingeniero" type="text" id="cargo" name="Cargo" required maxlength="100" />
         </div>
 
         <!-- STEP 3: Laborales -->
         <div class="step">
           <label for="direccionTrabajo">Dirección Trabajo:</label>
           <textarea
+           placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Local Gris."
             id="direccionTrabajo"
             name="Dirección Trabajo"
             required
@@ -504,7 +507,7 @@
     <div id="successModal" class="modal">
       <div class="modal-content">
         <h3>✅ Datos enviados</h3>
-        <p>El asesor continuará con el proceso y se contactará contigo.</p>
+<hr/>        <p>El asesor continuará con el proceso y se contactará contigo.</p>
         <button
           class="btn btn-primary"
           onclick="location.reload()"
@@ -768,4 +771,3 @@
     </script>
   </body>
 </html>
-
