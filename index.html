@@ -1,550 +1,759 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Actualización</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actualización</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/6zP8rxG.jpeg">
-  <!-- Metadatos Open Graph para WhatsApp, Facebook, etc. -->
-  <meta property="og:title" content="Actualización">
-  <meta property="og:description" content="Formulario de actualización de datos.">
-  <meta property="og:image" content="https://i.imgur.com/6zP8rxG.jpeg">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tu-sitio.com/tu-formulario.html">
+    <!-- Favicon y Open Graph -->
+    <link
+      rel="icon"
+      type="image/jpeg"
+      href="https://i.imgur.com/6zP8rxG.jpeg"
+    />
+    <meta property="og:title" content="Actualización" />
+    <meta
+      property="og:description"
+      content="Formulario de actualización de datos."
+    />
+    <meta property="og:image" content="https://i.imgur.com/6zP8rxG.jpeg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tu-sitio.com/tu-formulario.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Actualización" />
+    <meta
+      name="twitter:description"
+      content="Formulario de actualización de datos."
+    />
+    <meta name="twitter:image" content="https://i.imgur.com/6zP8rxG.jpeg" />
 
-  <!-- Opcional para Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Actualización">
-  <meta name="twitter:description" content="Formulario de actualización de datos.">
-  <meta name="twitter:image" content="https://i.imgur.com/6zP8rxG.jpeg">
+    <!-- Estilos -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #0d47a1;
+        --accent-color: #34c759;
+        --text-color: #1c2526;
+        --background-color: #f5f7fa;
+        --card-background: #ffffff;
+        --shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        --border-radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--background-color);
+        color: var(--text-color);
+        padding: 20px;
+        padding-top: 140px;
+        min-height: 100vh;
+      }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        text-align: center;
+        padding: 15px;
+        box-shadow: var(--shadow);
+        z-index: 1000;
+      }
+      header h1 {
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
+        margin: 0 0 5px;
+      }
+      header span {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+      }
+      .form-container {
+        background: var(--card-background);
+        padding: clamp(20px, 5vw, 25px);
+        border-radius: var(--border-radius);
+        width: 100%;
+        max-width: 700px;
+        margin: 20px auto;
+        box-shadow: var(--shadow);
+      }
+      h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        font-size: clamp(1.5rem, 4vw, 1.8rem);
+      }
+      .progress {
+        height: 8px;
+        background: #e8ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        width: 0;
+        transition: width 0.4s ease;
+      }
+      .step {
+        display: none;
+      }
+      .step.active {
+        display: block;
+      }
+      label {
+        display: block;
+        margin: 12px 0 6px;
+        font-weight: 500;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: clamp(10px, 3vw, 12px);
+        border: 1px solid #dfe1e5;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        box-sizing: border-box;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+        outline: none;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .inline-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .inline-input input {
+        width: clamp(60px, 15vw, 80px);
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .btn {
+        padding: clamp(10px, 3vw, 12px);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        flex: 1;
+        min-width: 100px;
+        font-weight: 600;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        transition: background 0.3s;
+        text-align: center;
+      }
+      .btn-primary {
+        background: var(--primary-color);
+        color: white;
+      }
+      .btn-secondary {
+        background: #e8ecef;
+        color: var(--text-color);
+      }
+      .btn-primary:hover {
+        background: #1669c1;
+      }
+      .btn-secondary:hover {
+        background: #d0d4d9;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .modal.active {
+        display: flex;
+        opacity: 1;
+      }
+      .modal-content {
+        background: white;
+        padding: clamp(20px, 5vw, 25px);
+        border-radius: var(--border-radius);
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+      }
+      .modal.active .modal-content {
+        transform: scale(1);
+      }
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--primary-color);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .file-upload-container {
+        position: relative;
+        margin-bottom: 15px;
+        padding: 15px;
+        background: #f8fafc;
+        border: 2px dashed #dfe1e5;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .file-upload-container:hover,
+      .file-upload-container.dragover {
+        background: #e6f0fa;
+        border-color: var(--primary-color);
+      }
+      .file-upload-container input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .file-upload-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-color);
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+      }
+      .file-upload-label i {
+        font-size: 24px;
+        color: var(--primary-color);
+      }
+      .file-name {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #666;
+        word-break: break-all;
+      }
+      .preview {
+        max-width: 100%;
+        max-height: 200px;
+        margin: 10px auto;
+        border-radius: 8px;
+        display: none;
+        border: 1px solid #dfe1e5;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Actualización de Datos</h1>
+      <span>Asesor: Miguel Romero</span>
+    </header>
 
- 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    <div class="form-container">
+      <h2>Formulario de Actualización</h2>
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <form id="actualizacionForm">
+        <!-- STEP 0: Subida de Identificación -->
+        <div class="step active">
+          <label>Sube tu Identificación (frontal):</label>
+          <div class="file-upload-container" id="frontalContainer">
+            <input
+              type="file"
+              id="frontal"
+              accept="image/*"
+              capture="environment"
+            />
+            <div class="file-upload-label">
+              <i>📷</i>
+              <span>Arrastra o haz clic para subir la imagen frontal</span>
+            </div>
+            <div class="file-name" id="frontalFileName"></div>
+          </div>
+          <img id="previewFrontal" class="preview" alt="Vista previa frontal" />
 
-  :root {
-    --primary-color: #1a73e8;
-    --secondary-color: #0d47a1;
-    --accent-color: #34c759;
-    --text-color: #1c2526;
-    --background-color: #f5f7fa;
-    --card-background: #ffffff;
-    --shadow: 0 6px 20px rgba(0,0,0,0.1);
-    --border-radius: 16px;
-  }
+          <label>Sube tu Identificación (reverso):</label>
+          <div class="file-upload-container" id="reversoContainer">
+            <input
+              type="file"
+              id="reverso"
+              accept="image/*"
+              capture="environment"
+            />
+            <div class="file-upload-label">
+              <i>📷</i>
+              <span>Arrastra o haz clic para subir la imagen reverso</span>
+            </div>
+            <div class="file-name" id="reversoFileName"></div>
+          </div>
+          <img id="previewReverso" class="preview" alt="Vista previa reverso" />
+        </div>
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+        <!-- STEP 1: Datos Personales -->
+        <div class="step">
+          <label for="nombre">Tu Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="Nombre del Cliente"
+            required
+            maxlength="100"
+          />
+          <label for="identidad">Número de Identidad:</label>
+          <input
+            type="text"
+            id="identidad"
+            name="Número de Identidad"
+            inputmode="numeric"
+            maxlength="15"
+            required
+            placeholder="0000-0000-00000"
+            pattern="\d{4}-\d{4}-\d{5}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{4})(\d)/,'$1-$2').replace(/^(\d{4}-\d{4})(\d)/,'$1-$2').slice(0,15);"
+          />
+          <label for="correo">Correo Personal:</label>
+          <input
+            type="email"
+            id="correo"
+            name="Correo Personal"
+            required
+            maxlength="100"
+          />
+          <label for="direccionCasa">Dirección Casa:</label>
+          <textarea
+            id="direccionCasa"
+            name="Dirección Casa"
+            required
+            maxlength="200"
+          ></textarea>
+        </div>
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--background-color);
-    color: var(--text-color);
-    padding: 20px;
-    padding-top: 140px;
-    min-height: 100vh;
-  }
+        <!-- STEP 2: Contacto y Trabajo -->
+        <div class="step">
+          <label for="celular">Celular:</label>
+          <input
+            type="tel"
+            id="celular"
+            name="Celular"
+            inputmode="numeric"
+            maxlength="9"
+            required
+            placeholder="9876-5432"
+            pattern="\d{4}-\d{4}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{4})(\d)/,'$1-$2').slice(0,9);"
+          />
+          <label for="trabajo">Lugar de Trabajo:</label>
+          <input
+            type="text"
+            id="trabajo"
+            name="Lugar Trabajo"
+            required
+            maxlength="100"
+          />
+          <label for="cargo">Cargo:</label>
+          <input type="text" id="cargo" name="Cargo" required maxlength="100" />
+        </div>
 
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    text-align: center;
-    padding: 15px;
-    box-shadow: var(--shadow);
-    z-index: 1000;
-  }
+        <!-- STEP 3: Laborales -->
+        <div class="step">
+          <label for="direccionTrabajo">Dirección Trabajo:</label>
+          <textarea
+            id="direccionTrabajo"
+            name="Dirección Trabajo"
+            required
+            maxlength="200"
+          ></textarea>
+          <label for="ingreso">Ingreso Mensual:</label>
+          <input
+            type="number"
+            id="ingreso"
+            name="Ingreso Mensual"
+            step="0.01"
+            min="0"
+            required
+          />
+          <label for="antiguedad">Antigüedad Laboral (Años):</label>
+          <div class="inline-input">
+            <input
+              type="text"
+              id="antiguedad"
+              name="Años"
+              inputmode="numeric"
+              maxlength="2"
+              required
+              placeholder="Ej: 5"
+              pattern="[0-9]{1,2}"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,2);"
+            />
+            <span>Años</span>
+          </div>
+        </div>
 
-  header h1 {
-    font-size: clamp(1.4rem, 5vw, 1.6rem);
-    margin: 0 0 5px;
-  }
+        <!-- STEP 4: Referencias -->
+        <div class="step">
+          <label for="refFamiliar">Referencia Familiar:</label>
+          <input
+            type="text"
+            id="refFamiliar"
+            name="Referencia Familiar"
+            required
+            maxlength="100"
+          />
+          <label for="telRefFamiliar">Teléfono Ref. Familiar:</label>
+          <input
+            type="tel"
+            id="telRefFamiliar"
+            name="Teléfono Ref Familiar"
+            inputmode="numeric"
+            maxlength="9"
+            required
+            placeholder="9876-5432"
+            pattern="\d{4}-\d{4}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{4})(\d)/,'$1-$2').slice(0,9);"
+          />
+          <label for="amistad">Referencia Personal:</label>
+          <input
+            type="text"
+            id="amistad"
+            name="Amistad"
+            required
+            maxlength="100"
+          />
+          <label for="telAmistad">Teléfono Referencia Personal:</label>
+          <input
+            type="tel"
+            id="telAmistad"
+            name="Teléfono Amistad"
+            inputmode="numeric"
+            maxlength="9"
+            required
+            placeholder="9876-5432"
+            pattern="\d{4}-\d{4}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{4})(\d)/,'$1-$2').slice(0,9);"
+          />
+        </div>
 
-  header span {
-    font-size: clamp(0.9rem, 3vw, 1rem);
-  }
-
-  .form-container {
-    background: var(--card-background);
-    padding: clamp(20px, 5vw, 25px);
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 700px;
-    margin: 20px auto;
-    box-shadow: var(--shadow);
-  }
-
-  h2 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: clamp(1.5rem, 4vw, 1.8rem);
-  }
-
-  .progress {
-    height: 8px;
-    background: #e8ecef;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    width: 0;
-    transition: width 0.4s ease;
-  }
-
-  .step {
-    display: none;
-  }
-
-  .step.active {
-    display: block;
-  }
-
-  label {
-    display: block;
-    margin: 12px 0 6px;
-    font-weight: 500;
-    font-size: clamp(0.9rem, 3vw, 1rem);
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    padding: clamp(10px, 3vw, 12px);
-    border: 1px solid #dfe1e5;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    box-sizing: border-box;
-  }
-
-  input:focus,
-  textarea:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
-    outline: none;
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-
-  .inline-input {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .inline-input input {
-    width: clamp(60px, 15vw, 80px);
-  }
-
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .btn {
-    padding: clamp(10px, 3vw, 12px);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    flex: 1;
-    min-width: 100px;
-    font-weight: 600;
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    transition: background 0.3s;
-    text-align: center;
-  }
-
-  .btn-primary {
-    background: var(--primary-color);
-    color: white;
-  }
-
-  .btn-secondary {
-    background: #e8ecef;
-    color: var(--text-color);
-  }
-
-  .btn-primary:hover {
-    background: #1669c1;
-  }
-
-  .btn-secondary:hover {
-    background: #d0d4d9;
-  }
-
-  .hidden {
-    display: none !important;
-  }
-
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .modal.active {
-    display: flex;
-    opacity: 1;
-  }
-
-  .modal-content {
-    background: white;
-    padding: clamp(20px, 5vw, 25px);
-    border-radius: var(--border-radius);
-    text-align: center;
-    max-width: 90%;
-    width: 400px;
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-  }
-
-  .modal.active .modal-content {
-    transform: scale(1);
-  }
-
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--primary-color);
-    border-radius: 50%;
-    width: clamp(40px, 10vw, 50px);
-    height: clamp(40px, 10vw, 50px);
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-  }
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @media (max-width: 600px) {
-    body {
-      padding: 15px;
-      padding-top: 120px;
-    }
-
-    header {
-      padding: 10px;
-    }
-
-    .form-container {
-      padding: 15px;
-      margin: 15px auto;
-    }
-
-    .btn {
-      min-width: 80px;
-    }
-  }
-
-  @media (max-width: 400px) {
-    header h1 {
-      font-size: 1.2rem;
-    }
-
-    header span {
-      font-size: 0.8rem;
-    }
-
-    .form-container {
-      padding: 10px;
-    }
-
-    input,
-    textarea {
-      padding: 8px;
-      font-size: 0.9rem;
-    }
-
-    .btn {
-      padding: 8px;
-      font-size: 0.9rem;
-    }
-  }
-</style>
-</head>
-<body>
-<header>
-  <h1>Actualización de Datos</h1>
-  <span>Asesor: Miguel Romero</span>
-</header>
-
-<div class="form-container">
-  <h2>Formulario de Actualización</h2>
-
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <form id="actualizacionForm">
-    <!-- STEP 1 -->
-    <div class="step active">
-      <label for="nombre">Tu Nombre:</label>
-      <input type="text" id="nombre" name="Nombre del Cliente" required maxlength="100">
-
-      <label for="identidad">Número de Identidad:</label>
-      <input type="text" 
-             id="identidad" 
-             name="Número de Identidad" 
-             inputmode="numeric" 
-             maxlength="15" 
-             required 
-             placeholder="0000-0000-00000"
-             pattern="\d{4}-\d{4}-\d{5}"
-             oninput="this.value = this.value
-               .replace(/[^0-9]/g, '')
-               .replace(/^(\d{4})(\d)/, '$1-$2')
-               .replace(/^(\d{4}-\d{4})(\d)/, '$1-$2')
-               .slice(0, 15);"
-             title="Formato: 0000-0000-00000">
-
-      <label for="correo">Correo Personal:</label>
-      <input type="email" id="correo" name="Correo Personal" required maxlength="100" placeholder="ejemplo@correo.com">
-
-      <label for="direccionCasa">Dirección Casa (especifica ,calle y tipo y color de casa):</label>
-      <textarea id="direccionCasa" name="Dirección Casa" required maxlength="200"></textarea>
+        <div class="button-group">
+          <button
+            type="button"
+            class="btn btn-secondary hidden"
+            id="prevBtn"
+            onclick="nextPrev(-1)"
+            aria-label="Volver al paso anterior"
+          >
+            Atrás
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="nextBtn"
+            onclick="nextPrev(1)"
+            aria-label="Avanzar al siguiente paso o enviar"
+          >
+            Siguiente
+          </button>
+        </div>
+      </form>
     </div>
 
-    <!-- STEP 2 -->
-    <div class="step">
-      <label for="celular">Tu Número Celular:</label>
-      <input type="tel" 
-             id="celular" 
-             name="Celular" 
-             inputmode="numeric" 
-             maxlength="9" 
-             required 
-             placeholder="9876-5432"
-             pattern="\d{4}-\d{4}"
-             oninput="this.value = this.value
-               .replace(/[^0-9]/g, '')
-               .replace(/^(\d{4})(\d)/, '$1-$2')
-               .slice(0, 9);"
-             title="Formato: 9876-5432">
-
-      <label for="trabajo">Lugar de Trabajo:</label>
-      <input type="text" id="trabajo" name="Lugar Trabajo" required maxlength="100">
-
-      <label for="cargo">Cargo:</label>
-      <input type="text" id="cargo" name="Cargo" required maxlength="100">
+    <!-- Modales -->
+    <div id="loadingScreen" class="modal" aria-busy="true">
+      <div class="modal-content">
+        <h3>Enviando datos...</h3>
+        <div class="spinner"></div>
+        <p>Por favor espere</p>
+      </div>
     </div>
-
-    <!-- STEP 3 -->
-    <div class="step">
-      <label for="direccionTrabajo">Dirección Trabajo (especifica ,calle y referencias ej: contiguo de tal local):</label>
-      <textarea id="direccionTrabajo" name="Dirección Trabajo" required maxlength="200"></textarea>
-
-      <label for="ingreso">Ingreso Mensual:</label>
-      <input type="number" id="ingreso" name="Ingreso Mensual" step="0.01" min="0" required placeholder="Ej: 15000.00">
-
-      <label for="antiguedad">Antigüedad Laboral:</label>
-      <div class="inline-input">
-        <input type="text" 
-               id="antiguedad" 
-               name="Años" 
-               inputmode="numeric" 
-               pattern="[0-9]{1,2}" 
-               maxlength="2" 
-               required 
-               placeholder="Ej: 5"
-               oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);"
-               title="Ingresa un número entre 0 y 99">
-        <span>Años</span>
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <h3>✅ Datos enviados</h3>
+        <p>El asesor continuará con el proceso y se contactará contigo.</p>
+        <button
+          class="btn btn-primary"
+          onclick="location.reload()"
+          aria-label="Cerrar y reiniciar formulario"
+        >
+          Cerrar
+        </button>
       </div>
     </div>
 
-    <!-- STEP 4 -->
-    <div class="step">
-      <label for="refFamiliar">Nombre de referencia Familiar:</label>
-      <input type="text" id="refFamiliar" name="Referencia Familiar" required maxlength="100">
-
-      <label for="telRefFamiliar">Celular Ref. Familiar:</label>
-      <input type="tel" 
-             id="telRefFamiliar" 
-             name="Teléfono Ref Familiar" 
-             inputmode="numeric" 
-             maxlength="9" 
-             required 
-             placeholder="9876-5432"
-             pattern="\d{4}-\d{4}"
-             oninput="this.value = this.value
-               .replace(/[^0-9]/g, '')
-               .replace(/^(\d{4})(\d)/, '$1-$2')
-               .slice(0, 9);"
-             title="Formato: 9876-5432">
-
-      <label for="amistad">Nombre de referencia Personal:</label>
-      <input type="text" id="amistad" name="Amistad" required maxlength="100">
-
-      <label for="telAmistad">Celular de referencia Personal:</label>
-      <input type="tel" 
-             id="telAmistad" 
-             name="Teléfono Amistad" 
-             inputmode="numeric" 
-             maxlength="9" 
-             required 
-             placeholder="9876-5432"
-             pattern="\d{4}-\d{4}"
-             oninput="this.value = this.value
-               .replace(/[^0-9]/g, '')
-               .replace(/^(\d{4})(\d)/, '$1-$2')
-               .slice(0, 9);"
-             title="Formato: 9876-5432">
-    </div>
-
-    <div class="button-group">
-      <button type="button" class="btn btn-secondary hidden" id="prevBtn" onclick="nextPrev(-1)" aria-label="Volver al paso anterior">Atrás</button>
-      <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)" aria-label="Avanzar al siguiente paso o enviar">Siguiente</button>
-    </div>
-  </form>
-</div>
-
-<!-- Modal de carga -->
-<div id="loadingScreen" class="modal" aria-busy="true">
-  <div class="modal-content">
-    <h3>Enviando datos...</h3>
-    <div class="spinner"></div>
-    <p>Por favor espere</p>
-  </div>
-</div>
-
-<!-- Modal de éxito -->
-<div id="successModal" class="modal">
-  <div class="modal-content">
-    <h3>✅ Datos enviados</h3>
-    <p>El asesor continuará con el proceso y se contactará contigo.</p>
-    <button class="btn btn-primary" onclick="location.reload()" aria-label="Cerrar y reiniciar formulario">Cerrar</button>
-  </div>
-</div>
-
-<script>
-let currentStep = 0;
-let steps = document.querySelectorAll(".step");
-let nextBtn = document.getElementById("nextBtn");
-let prevBtn = document.getElementById("prevBtn");
-let progressBar = document.getElementById("progressBar");
-let loadingScreen = document.getElementById("loadingScreen");
-let successModal = document.getElementById("successModal");
-
-function showStep(n) {
-  steps.forEach((s, i) => s.classList.toggle("active", i === n));
-  prevBtn.classList.toggle("hidden", n === 0);
-  nextBtn.innerText = n === steps.length - 1 ? "Enviar" : "Siguiente";
-  progressBar.style.width = ((n + 1) / steps.length * 100) + "%";
-}
-
-function nextPrev(n) {
-  let inputs = steps[currentStep].querySelectorAll("[required]");
-  for (let inp of inputs) {
-    if (!inp.checkValidity()) {
-      inp.reportValidity();
-      return;
-    }
-  }
-  currentStep += n;
-  if (currentStep >= steps.length) {
-    enviarDatos();
-    return;
-  }
-  if (currentStep < 0) currentStep = 0;
-  showStep(currentStep);
-}
-
-function enviarDatos() {
-  loadingScreen.classList.add("active");
-  let form = document.getElementById("actualizacionForm");
-  let data = new FormData(form);
-  let queryParams = [];
-
-  const pasos = {
-    "Datos Personales": ["Nombre del Cliente", "Número de Identidad", "Correo Personal", "Dirección Casa"],
-    "Contacto": ["Celular", "Lugar Trabajo", "Cargo"],
-    "Laborales": ["Dirección Trabajo", "Ingreso Mensual", "Años"],
-    "Referencias": ["Referencia Familiar", "Teléfono Ref Familiar", "Amistad", "Teléfono Amistad"]
-  };
-
-  for (let seccion in pasos) {
-    pasos[seccion].forEach(key => {
-      let value = data.get(key)?.trim();
-      if (value) {
-        queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    <script>
+      // Función para generar un ID único alfanumérico
+      function generateUniqueId() {
+        const chars =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let id = "";
+        for (let i = 0; i < 12; i++) {
+          id += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return id;
       }
-    });
-  }
 
-  const baseUrl = "https://script.google.com/macros/s/AKfycbyF3vloNSa5cGPlWSa5aZbDp__BOpqMWlR5dV7jImLkyu5cp1qobcu4ujxZAnaTnSfK8g/exec";
-  const url = `${baseUrl}?${queryParams.join('&')}`;
+      let currentStep = 0;
+      let steps = document.querySelectorAll(".step");
+      let nextBtn = document.getElementById("nextBtn");
+      let prevBtn = document.getElementById("prevBtn");
+      let progressBar = document.getElementById("progressBar");
+      let loadingScreen = document.getElementById("loadingScreen");
+      let successModal = document.getElementById("successModal");
 
-  if (url.length > 2000) {
-    loadingScreen.classList.remove("active");
-    alert("Error: Los datos son demasiado largos para enviar por GET. Por favor, reduce la longitud de los campos de texto.");
-    return;
-  }
+      const frontalInput = document.getElementById("frontal");
+      const reversoInput = document.getElementById("reverso");
+      const previewFrontal = document.getElementById("previewFrontal");
+      const previewReverso = document.getElementById("previewReverso");
+      const frontalFileName = document.getElementById("frontalFileName");
+      const reversoFileName = document.getElementById("reversoFileName");
+      const frontalContainer = document.getElementById("frontalContainer");
+      const reversoContainer = document.getElementById("reversoContainer");
 
-  fetch(url, {
-    method: "GET",
-    redirect: "follow"
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
-    }
-    return response.json();
-  })
-  .then(result => {
-    console.log("Server response:", result);
-    if (result.status !== "success") {
-      throw new Error(result.message || "El servidor no confirmó el éxito del envío");
-    }
-    loadingScreen.classList.remove("active");
-    successModal.classList.add("active");
-  })
-  .catch(error => {
-    console.error("Error al enviar los datos:", error);
-    loadingScreen.classList.remove("active");
-    let errorMessage = "Error al enviar los datos: " + (error.message || "Intenta nuevamente.");
-    if (error.message.includes("403")) {
-      errorMessage = "Error al enviar los datos: El servidor rechazó la solicitud (problema de permisos).";
-    } else if (error.message.includes("404")) {
-      errorMessage = "Error al enviar los datos: El endpoint no fue encontrado.";
-    } else if (error.message.includes("network")) {
-      errorMessage = "Error al enviar los datos: Problema de conexión de red.";
-    }
-    alert(errorMessage);
-  });
-}
+      // Manejo de drag and drop
+      [frontalContainer, reversoContainer].forEach((container) => {
+        ["dragenter", "dragover"].forEach((event) => {
+          container.addEventListener(event, () =>
+            container.classList.add("dragover")
+          );
+        });
+        ["dragleave", "drop"].forEach((event) => {
+          container.addEventListener(event, () =>
+            container.classList.remove("dragover")
+          );
+        });
+      });
 
-showStep(currentStep);
-</script>
-</body>
+      // Mostrar nombre de archivo y vista previa
+      frontalInput.addEventListener("change", (e) => {
+        if (e.target.files[0]) {
+          frontalFileName.textContent = e.target.files[0].name;
+          let reader = new FileReader();
+          reader.onload = (ev) => {
+            previewFrontal.src = ev.target.result;
+            previewFrontal.style.display = "block";
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        } else {
+          frontalFileName.textContent = "";
+          previewFrontal.style.display = "none";
+        }
+      });
+
+      reversoInput.addEventListener("change", (e) => {
+        if (e.target.files[0]) {
+          reversoFileName.textContent = e.target.files[0].name;
+          let reader = new FileReader();
+          reader.onload = (ev) => {
+            previewReverso.src = ev.target.result;
+            previewReverso.style.display = "block";
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        } else {
+          reversoFileName.textContent = "";
+          previewReverso.style.display = "none";
+        }
+      });
+
+      function showStep(n) {
+        steps.forEach((s, i) => s.classList.toggle("active", i === n));
+        prevBtn.classList.toggle("hidden", n === 0);
+        nextBtn.innerText = n === steps.length - 1 ? "Enviar" : "Siguiente";
+        progressBar.style.width = ((n + 1) / steps.length) * 100 + "%";
+      }
+
+      function nextPrev(n) {
+        let inputs = steps[currentStep].querySelectorAll("[required]");
+        for (let inp of inputs) {
+          if (!inp.checkValidity()) {
+            inp.reportValidity();
+            return;
+          }
+        }
+        currentStep += n;
+        if (currentStep >= steps.length) {
+          enviarDatos();
+          return;
+        }
+        if (currentStep < 0) currentStep = 0;
+        showStep(currentStep);
+      }
+
+      async function toBase64(file) {
+        return new Promise((res, rej) => {
+          let reader = new FileReader();
+          reader.onload = () => res(reader.result);
+          reader.onerror = rej;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function enviarDatos() {
+        loadingScreen.classList.add("active");
+        const form = document.getElementById("actualizacionForm");
+        const data = new FormData(form);
+        let frontBase64 = frontalInput.files[0]
+          ? await toBase64(frontalInput.files[0])
+          : null;
+        let backBase64 = reversoInput.files[0]
+          ? await toBase64(reversoInput.files[0])
+          : null;
+        const uniqueId = generateUniqueId();
+        const pdfPath = `ACT_Images/${uniqueId}.pdf`;
+        const pdfPathn = `${uniqueId}.pdf`;
+
+        // Agregar la ruta del PDF al FormData con el ID único
+        data.append("DocumentoIdentidad", pdfPath);
+
+        // Construir query params para los datos del formulario
+        let queryParams = [];
+        const pasos = {
+          "Datos Personales": [
+            "Nombre del Cliente",
+            "Número de Identidad",
+            "Correo Personal",
+            "Dirección Casa",
+          ],
+          Contacto: ["Celular", "Lugar Trabajo", "Cargo"],
+          Laborales: ["Dirección Trabajo", "Ingreso Mensual", "Años"],
+          Referencias: [
+            "Referencia Familiar",
+            "Teléfono Ref Familiar",
+            "Amistad",
+            "Teléfono Amistad",
+          ],
+          Documentos: ["DocumentoIdentidad"],
+        };
+
+        for (let seccion in pasos) {
+          pasos[seccion].forEach((key) => {
+            let value = data.get(key)?.trim();
+            if (value) {
+              queryParams.push(
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+              );
+            }
+          });
+        }
+
+        // Enviar datos a la hoja de cálculo primero
+        const url = `https://script.google.com/macros/s/AKfycbz6fikeQcBC0ORyPvYE6KeZvCHUBZ7MWq8dwSN8hziiwXxZi__b3Kbav0Cb7BpVQ8RDdQ/exec?${queryParams.join(
+          "&"
+        )}`;
+        try {
+          if (url.length > 2000) {
+            throw new Error(
+              "Los datos son demasiado largos para enviar. Por favor, reduce la longitud de los campos de texto."
+            );
+          }
+          const dataRes = await fetch(url, {
+            method: "GET",
+            redirect: "follow",
+          });
+          if (!dataRes.ok) {
+            throw new Error(
+              `Error del servidor: ${dataRes.status} ${dataRes.statusText}`
+            );
+          }
+          const dataJson = await dataRes.json();
+          if (dataJson.status !== "success") {
+            throw new Error(dataJson.message || "Error al enviar formulario.");
+          }
+        } catch (err) {
+          console.error(
+            "Error al enviar los datos a la hoja de cálculo:",
+            err.message
+          );
+          loadingScreen.classList.remove("active");
+          let errorMessage =
+            "Error al enviar los datos: " +
+            (err.message || "Intenta nuevamente.");
+          if (err.message.includes("403")) {
+            errorMessage =
+              "Error al enviar los datos: El servidor rechazó la solicitud (problema de permisos).";
+          } else if (err.message.includes("404")) {
+            errorMessage =
+              "Error al enviar los datos: El endpoint no fue encontrado.";
+          } else if (err.message.includes("network")) {
+            errorMessage =
+              "Error al enviar los datos: Problema de conexión de red.";
+          }
+          alert(errorMessage);
+          return;
+        }
+
+        // Subir imágenes después de enviar los datos
+        if (frontBase64 || backBase64) {
+          try {
+            const res = await fetch(
+              "https://script.google.com/macros/s/AKfycbyydhzwRzFZaPSnK7HfZIz40yH6VY1X074gkxfurHlV8-Oz58taRbDhHKB01mgrFUd3ig/exec",
+              {
+                method: "POST",
+                body: new URLSearchParams({
+                  front: frontBase64 || "",
+                  back: backBase64 || "",
+                  filename: pdfPathn,
+                }),
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              }
+            );
+            const json = await res.json();
+            if (json.status !== "success") {
+              console.warn(
+                "Advertencia al subir imágenes: " +
+                  (json.message || "No se pudo subir las imágenes.")
+              );
+            }
+          } catch (err) {
+            console.warn("Advertencia al subir imágenes: " + err.message);
+            // No mostrar alerta para errores de imagen, solo registrar en consola
+          }
+        }
+
+        // Mostrar éxito después de enviar los datos (independientemente del resultado de las imágenes)
+        loadingScreen.classList.remove("active");
+        successModal.classList.add("active");
+      }
+
+      showStep(currentStep);
+    </script>
+  </body>
 </html>
-
-
