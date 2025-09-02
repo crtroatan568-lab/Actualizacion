@@ -231,19 +231,39 @@
       }
       .file-upload-container {
         position: relative;
-        margin-bottom: 15px;
-        padding: 15px;
-        background: #f8fafc;
-        border: 2px dashed #dfe1e5;
-        border-radius: 10px;
-        text-align: center;
-        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f9f9f9;
+        overflow: hidden;
+        cursor: pointer;
+        margin: 0 auto; /* Centrar horizontalmente */
       }
-      .file-upload-container:hover,
-      .file-upload-container.dragover {
-        background: #e6f0fa;
-        border-color: var(--primary-color);
+
+      .file-upload-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Centrar verticalmente */
+        gap: 20px; /* Reducir la separación entre los inputs */
       }
+
+      .file-upload-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+      }
+
       .file-upload-container input[type="file"] {
         position: absolute;
         width: 100%;
@@ -253,79 +273,57 @@
         opacity: 0;
         cursor: pointer;
       }
-      .file-upload-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        color: var(--text-color);
-        font-size: clamp(0.9rem, 2.5vw, 1rem);
-      }
-      .file-upload-label i {
-        font-size: 24px;
-        color: var(--primary-color);
-      }
-      .file-name {
-        margin-top: 8px;
-        font-size: 0.9rem;
-        color: #666;
-        word-break: break-all;
-      }
-      .preview {
-        max-width: 100%;
-        max-height: 200px;
-        margin: 10px auto;
-        border-radius: 8px;
-        display: none;
-        border: 1px solid #dfe1e5;
+
+      .file-upload-container.dragover {
+        background-color: #e6f0fa;
+        border-color: #007bff;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Actualización de Datos</h1>
+      <h1>Actualización de datos</h1>
       <span>Asesor: Miguel Romero</span>
     </header>
 
     <div class="form-container">
-      <h2>Formulario de Actualización</h2>
+      <h2>Actualización de Datos</h2>
       <div class="progress">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <form id="actualizacionForm">
         <!-- STEP 0: Subida de Identificación -->
         <div class="step active">
-          <label>Sube tu Identificación (frontal):</label>
-          <div class="file-upload-container" id="frontalContainer">
-            <input
-              type="file"
-              id="frontal"
-              accept="image/*"
-              capture="environment"
-            />
-            <div class="file-upload-label">
-              <i>📷</i>
-              <span>Arrastra o haz clic para subir la imagen frontal</span>
+          <label>Sube tu Identificación :</label>
+          <div class="file-upload-wrapper">
+            <div class="file-upload-container" id="frontalUpload">
+              <input
+                type="file"
+                id="frontal"
+                accept="image/*"
+                capture="environment"
+                onchange="previewImage(event, 'frontalUpload')"
+              />
+              <img id="frontalPreview" alt="Vista previa frontal" />
+              <span>Subir Imagen Frontal</span>
             </div>
-            <div class="file-name" id="frontalFileName"></div>
-          </div>
-          <img id="previewFrontal" class="preview" alt="Vista previa frontal" />
 
-          <label>Sube tu Identificación (reverso):</label>
-          <div class="file-upload-container" id="reversoContainer">
-            <input
-              type="file"
-              id="reverso"
-              accept="image/*"
-              capture="environment"
-            />
-            <div class="file-upload-label">
-              <i>📷</i>
-              <span>Arrastra o haz clic para subir la imagen reverso</span>
+            <div class="file-upload-container" id="reversoUpload">
+              <input
+                type="file"
+                id="reverso"
+                accept="image/*"
+                capture="environment"
+                onchange="previewImage(event, 'reversoUpload')"
+              />
+              <img id="reversoPreview" alt="Vista previa reverso" />
+              <span>Subir Imagen Reverso</span>
             </div>
-            <div class="file-name" id="reversoFileName"></div>
           </div>
-          <img id="previewReverso" class="preview" alt="Vista previa reverso" />
+          <div class="file-name" id="frontalFileName"></div>
+
+          
+          <div class="file-name" id="reversoFileName"></div>
         </div>
 
         <!-- STEP 1: Datos Personales -->
@@ -751,6 +749,19 @@
         // Mostrar éxito después de enviar los datos (independientemente del resultado de las imágenes)
         loadingScreen.classList.remove("active");
         successModal.classList.add("active");
+      }
+
+      function previewImage(event, containerId) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const preview = document.querySelector(`#${containerId} img`);
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
       }
 
       showStep(currentStep);
