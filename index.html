@@ -625,59 +625,65 @@
           reader.readAsDataURL(file);
         });
       }
+// Agregar la ur al parametro
+async function enviarDatos() {
+  loadingScreen.classList.add("active");
+  const form = document.getElementById("actualizacionForm");
+  const data = new FormData(form);
+  let frontBase64 = frontalInput.files[0]
+    ? await toBase64(frontalInput.files[0])
+    : null;
+  let backBase64 = reversoInput.files[0]
+    ? await toBase64(reversoInput.files[0])
+    : null;
+  const uniqueId = generateUniqueId();
+  const pdfPath = `ACT_Images/${uniqueId}.pdf`;
+  const pdfPathn = `${uniqueId}.pdf`;
 
-      async function enviarDatos() {
-        loadingScreen.classList.add("active");
-        const form = document.getElementById("actualizacionForm");
-        const data = new FormData(form);
-        let frontBase64 = frontalInput.files[0]
-          ? await toBase64(frontalInput.files[0])
-          : null;
-        let backBase64 = reversoInput.files[0]
-          ? await toBase64(reversoInput.files[0])
-          : null;
-        const uniqueId = generateUniqueId();
-        const pdfPath = `ACT_Images/${uniqueId}.pdf`;
-        const pdfPathn = `${uniqueId}.pdf`;
+  // Agregar la ruta del PDF al FormData con el ID único
+  data.append("DocumentoIdentidad", pdfPath);
 
-        // Agregar la ruta del PDF al FormData con el ID único
-        data.append("DocumentoIdentidad", pdfPath);
+  // Construir query params para los datos del formulario
+  let queryParams = [];
+  const pasos = {
+    "Datos Personales": [
+      "Nombre del Cliente",
+      "Número de Identidad",
+      "Correo Personal",
+      "Dirección Casa",
+    ],
+    Contacto: ["Celular", "Lugar Trabajo", "Cargo"],
+    Laborales: ["Dirección Trabajo", "Ingreso Mensual", "Años"],
+    Referencias: [
+      "Referencia Familiar",
+      "Teléfono Ref Familiar",
+      "Amistad",
+      "Teléfono Amistad",
+    ],
+    Documentos: ["DocumentoIdentidad"],
+  };
 
-        // Construir query params para los datos del formulario
-        let queryParams = [];
-        const pasos = {
-          "Datos Personales": [
-            "Nombre del Cliente",
-            "Número de Identidad",
-            "Correo Personal",
-            "Dirección Casa",
-          ],
-          Contacto: ["Celular", "Lugar Trabajo", "Cargo"],
-          Laborales: ["Dirección Trabajo", "Ingreso Mensual", "Años"],
-          Referencias: [
-            "Referencia Familiar",
-            "Teléfono Ref Familiar",
-            "Amistad",
-            "Teléfono Amistad",
-          ],
-          Documentos: ["DocumentoIdentidad"],
-        };
+  for (let seccion in pasos) {
+    pasos[seccion].forEach((key) => {
+      let value = data.get(key)?.trim();
+      if (value) {
+        queryParams.push(
+          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        );
+      }
+    });
+  }
 
-        for (let seccion in pasos) {
-          pasos[seccion].forEach((key) => {
-            let value = data.get(key)?.trim();
-            if (value) {
-              queryParams.push(
-                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-              );
-            }
-          });
-        }
+  // ⬇️ Agregar usuario desde la URL
+  let urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("usuario")) {
+    queryParams.push(`usuario=${encodeURIComponent(urlParams.get("usuario"))}`);
+  }
 
-        // Enviar datos a la hoja de cálculo primero
-        const url = `https://script.google.com/macros/s/AKfycbz6fikeQcBC0ORyPvYE6KeZvCHUBZ7MWq8dwSN8hziiwXxZi__b3Kbav0Cb7BpVQ8RDdQ/exec?${queryParams.join(
-          "&"
-        )}`;
+  // Enviar datos a la hoja de cálculo primero
+  const url = `https://script.google.com/macros/s/AKfycbz6fikeQcBC0ORyPvYE6KeZvCHUBZ7MWq8dwSN8hziiwXxZi__b3Kbav0Cb7BpVQ8RDdQ/exec?${queryParams.join(
+    "&"
+  )}`;
         try {
           if (url.length > 2000) {
             throw new Error(
@@ -772,3 +778,4 @@
     </script>
   </body>
 </html>
+
