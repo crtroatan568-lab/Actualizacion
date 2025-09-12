@@ -283,50 +283,18 @@
   <body>
     <header>
       <h1>Actualización de datos</h1>
-      
     </header>
 
     <div class="form-container">
-      <h2>Actualización de Datos</h2><br/>
-<h3 id="asesorNombre">Asesor:</h3>
-      
+      <h2>Actualización de Datos</h2>
+      <br />
+      <h3 id="asesorNombre">Asesor:</h3>
+
       <div class="progress">
         <div class="progress-bar" id="progressBar"></div>
       </div>
       <form id="actualizacionForm">
-        <!-- STEP 0: Subida de Identificación -->
-        <div class="step active">
-          <label>Sube tu Identificación :</label>
-          <div class="file-upload-wrapper">
-            <div class="file-upload-container" id="frontalUpload">
-              <input
-                type="file"
-                id="frontal"
-                accept="image/*"
-                capture="environment"
-                onchange="previewImage(event, 'frontalUpload')"
-              />
-              <img id="frontalPreview" alt="Vista previa frontal" />
-              <span>Subir Imagen Frontal</span>
-            </div>
-
-            <div class="file-upload-container" id="reversoUpload">
-              <input
-                type="file"
-                id="reverso"
-                accept="image/*"
-                capture="environment"
-                onchange="previewImage(event, 'reversoUpload')"
-              />
-              <img id="reversoPreview" alt="Vista previa reverso" />
-              <span>Subir Imagen Reverso</span>
-            </div>
-          </div>
-          <div class="file-name" id="frontalFileName"></div>
-
-          
-          <div class="file-name" id="reversoFileName"></div>
-        </div>
+        <!-- Paso 1: Datos Personales (ahora es el primer paso) -->
 
         <!-- STEP 1: Datos Personales -->
         <div class="step">
@@ -360,7 +328,7 @@
           />
           <label for="direccionCasa">Dirección Casa (especifica):</label>
           <textarea
-          placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Casa Gris."
+            placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Casa Gris."
             id="direccionCasa"
             name="Dirección Casa"
             required
@@ -384,7 +352,7 @@
           />
           <label for="trabajo">Lugar de Trabajo:</label>
           <input
-          placeholder="Nombre del negocio en que trabajas"
+            placeholder="Nombre del negocio en que trabajas"
             type="text"
             id="trabajo"
             name="Lugar Trabajo"
@@ -392,14 +360,21 @@
             maxlength="100"
           />
           <label for="cargo">Cargo:</label>
-          <input  placeholder="Ejem: Ingeniero" type="text" id="cargo" name="Cargo" required maxlength="100" />
+          <input
+            placeholder="Ejem: Ingeniero"
+            type="text"
+            id="cargo"
+            name="Cargo"
+            required
+            maxlength="100"
+          />
         </div>
 
         <!-- STEP 3: Laborales -->
         <div class="step">
           <label for="direccionTrabajo">Dirección Trabajo:</label>
           <textarea
-           placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Local Gris."
+            placeholder="Ejem: Roatan,Los Fuertes,Calle Almendro,Contiguo a pulperia Alma Local Gris."
             id="direccionTrabajo"
             name="Dirección Trabajo"
             required
@@ -407,7 +382,7 @@
           ></textarea>
           <label for="ingreso">Ingreso Mensual:</label>
           <input
-          placeholder="Ejem: 10000"
+            placeholder="Ejem: 10000"
             type="number"
             id="ingreso"
             name="Ingreso Mensual"
@@ -510,7 +485,8 @@
     <div id="successModal" class="modal">
       <div class="modal-content">
         <h3>✅ Datos enviados</h3>
-<hr/>        <p>El asesor continuará con el proceso y se contactará contigo.</p>
+        <hr />
+        <p>El asesor continuará con el proceso y se contactará contigo.</p>
         <button
           class="btn btn-primary"
           onclick="location.reload()"
@@ -523,15 +499,15 @@
 
     <script>
       // Mostrar el nombre del asesor usando el parámetro "name" de la URL
-document.addEventListener("DOMContentLoaded", () => {
-  const h3Asesor = document.getElementById("asesorNombre");
-  const urlParams = new URLSearchParams(window.location.search);
-  const nombreAsesor = urlParams.get("name"); // obtiene ?name=...
+      document.addEventListener("DOMContentLoaded", () => {
+        const h3Asesor = document.getElementById("asesorNombre");
+        const urlParams = new URLSearchParams(window.location.search);
+        const nombreAsesor = urlParams.get("name"); // obtiene ?name=...
 
-  if (nombreAsesor) {
-    h3Asesor.textContent = `Asesor: ${decodeURIComponent(nombreAsesor)}`;
-  }
-});
+        if (nombreAsesor) {
+          h3Asesor.textContent = `Asesor: ${decodeURIComponent(nombreAsesor)}`;
+        }
+      });
 
       // Función para generar un ID único alfanumérico
       function generateUniqueId() {
@@ -551,60 +527,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let progressBar = document.getElementById("progressBar");
       let loadingScreen = document.getElementById("loadingScreen");
       let successModal = document.getElementById("successModal");
-
-      const frontalInput = document.getElementById("frontal");
-      const reversoInput = document.getElementById("reverso");
-      const previewFrontal = document.getElementById("previewFrontal");
-      const previewReverso = document.getElementById("previewReverso");
-      const frontalFileName = document.getElementById("frontalFileName");
-      const reversoFileName = document.getElementById("reversoFileName");
-      const frontalContainer = document.getElementById("frontalContainer");
-      const reversoContainer = document.getElementById("reversoContainer");
-
-      // Manejo de drag and drop
-      [frontalContainer, reversoContainer].forEach((container) => {
-        ["dragenter", "dragover"].forEach((event) => {
-          container.addEventListener(event, () =>
-            container.classList.add("dragover")
-          );
-        });
-        ["dragleave", "drop"].forEach((event) => {
-          container.addEventListener(event, () =>
-            container.classList.remove("dragover")
-          );
-        });
-      });
-
-      // Mostrar nombre de archivo y vista previa
-      frontalInput.addEventListener("change", (e) => {
-        if (e.target.files[0]) {
-          frontalFileName.textContent = e.target.files[0].name;
-          let reader = new FileReader();
-          reader.onload = (ev) => {
-            previewFrontal.src = ev.target.result;
-            previewFrontal.style.display = "block";
-          };
-          reader.readAsDataURL(e.target.files[0]);
-        } else {
-          frontalFileName.textContent = "";
-          previewFrontal.style.display = "none";
-        }
-      });
-
-      reversoInput.addEventListener("change", (e) => {
-        if (e.target.files[0]) {
-          reversoFileName.textContent = e.target.files[0].name;
-          let reader = new FileReader();
-          reader.onload = (ev) => {
-            previewReverso.src = ev.target.result;
-            previewReverso.style.display = "block";
-          };
-          reader.readAsDataURL(e.target.files[0]);
-        } else {
-          reversoFileName.textContent = "";
-          previewReverso.style.display = "none";
-        }
-      });
 
       function showStep(n) {
         steps.forEach((s, i) => s.classList.toggle("active", i === n));
@@ -638,65 +560,55 @@ document.addEventListener("DOMContentLoaded", () => {
           reader.readAsDataURL(file);
         });
       }
-// Agregar la ur al parametro
-async function enviarDatos() {
-  loadingScreen.classList.add("active");
-  const form = document.getElementById("actualizacionForm");
-  const data = new FormData(form);
-  let frontBase64 = frontalInput.files[0]
-    ? await toBase64(frontalInput.files[0])
-    : null;
-  let backBase64 = reversoInput.files[0]
-    ? await toBase64(reversoInput.files[0])
-    : null;
-  const uniqueId = generateUniqueId();
-  const pdfPath = `ACT_Images/${uniqueId}.pdf`;
-  const pdfPathn = `${uniqueId}.pdf`;
+      // Agregar la ur al parametro
+      async function enviarDatos() {
+        loadingScreen.classList.add("active");
+        const form = document.getElementById("actualizacionForm");
+        const data = new FormData(form);
 
-  // Agregar la ruta del PDF al FormData con el ID único
-  data.append("DocumentoIdentidad", pdfPath);
+        // Construir query params para los datos del formulario
+        let queryParams = [];
+        const pasos = {
+          "Datos Personales": [
+            "Nombre del Cliente",
+            "Número de Identidad",
+            "Correo Personal",
+            "Dirección Casa",
+          ],
+          Contacto: ["Celular", "Lugar Trabajo", "Cargo"],
+          Laborales: ["Dirección Trabajo", "Ingreso Mensual", "Años"],
+          Referencias: [
+            "Referencia Familiar",
+            "Teléfono Ref Familiar",
+            "Amistad",
+            "Teléfono Amistad",
+          ],
+          Documentos: ["DocumentoIdentidad"],
+        };
 
-  // Construir query params para los datos del formulario
-  let queryParams = [];
-  const pasos = {
-    "Datos Personales": [
-      "Nombre del Cliente",
-      "Número de Identidad",
-      "Correo Personal",
-      "Dirección Casa",
-    ],
-    Contacto: ["Celular", "Lugar Trabajo", "Cargo"],
-    Laborales: ["Dirección Trabajo", "Ingreso Mensual", "Años"],
-    Referencias: [
-      "Referencia Familiar",
-      "Teléfono Ref Familiar",
-      "Amistad",
-      "Teléfono Amistad",
-    ],
-    Documentos: ["DocumentoIdentidad"],
-  };
+        for (let seccion in pasos) {
+          pasos[seccion].forEach((key) => {
+            let value = data.get(key)?.trim();
+            if (value) {
+              queryParams.push(
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+              );
+            }
+          });
+        }
 
-  for (let seccion in pasos) {
-    pasos[seccion].forEach((key) => {
-      let value = data.get(key)?.trim();
-      if (value) {
-        queryParams.push(
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-        );
-      }
-    });
-  }
+        // ⬇️ Agregar usuario desde la URL
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("usuario")) {
+          queryParams.push(
+            `usuario=${encodeURIComponent(urlParams.get("usuario"))}`
+          );
+        }
 
-  // ⬇️ Agregar usuario desde la URL
-  let urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("usuario")) {
-    queryParams.push(`usuario=${encodeURIComponent(urlParams.get("usuario"))}`);
-  }
-
-  // Enviar datos a la hoja de cálculo primero
-  const url = `https://script.google.com/macros/s/AKfycbz6fikeQcBC0ORyPvYE6KeZvCHUBZ7MWq8dwSN8hziiwXxZi__b3Kbav0Cb7BpVQ8RDdQ/exec?${queryParams.join(
-    "&"
-  )}`;
+        // Enviar datos a la hoja de cálculo primero
+        const url = `https://script.google.com/macros/s/AKfycbz6fikeQcBC0ORyPvYE6KeZvCHUBZ7MWq8dwSN8hziiwXxZi__b3Kbav0Cb7BpVQ8RDdQ/exec?${queryParams.join(
+          "&"
+        )}`;
         try {
           if (url.length > 2000) {
             throw new Error(
@@ -740,57 +652,14 @@ async function enviarDatos() {
         }
 
         // Subir imágenes después de enviar los datos
-        if (frontBase64 || backBase64) {
-          try {
-            const res = await fetch(
-              "https://script.google.com/macros/s/AKfycbxL2j2Iadf0o-rbW3RORH0fgEp7zQySqXUVLubRIA_7bYbSAItgp0GLkWS46SnNpfKPPw/exec",
-              {
-                method: "POST",
-                body: new URLSearchParams({
-                  front: frontBase64 || "",
-                  back: backBase64 || "",
-                  filename: pdfPathn,
-                }),
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              }
-            );
-            const json = await res.json();
-            if (json.status !== "success") {
-              console.warn(
-                "Advertencia al subir imágenes: " +
-                  (json.message || "No se pudo subir las imágenes.")
-              );
-            }
-          } catch (err) {
-            console.warn("Advertencia al subir imágenes: " + err.message);
-            // No mostrar alerta para errores de imagen, solo registrar en consola
-          }
-        }
+        // Ya no se suben imágenes
 
         // Mostrar éxito después de enviar los datos (independientemente del resultado de las imágenes)
         loadingScreen.classList.remove("active");
         successModal.classList.add("active");
       }
 
-      function previewImage(event, containerId) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const preview = document.querySelector(`#${containerId} img`);
-            preview.src = e.target.result;
-            preview.style.display = "block";
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-
       showStep(currentStep);
     </script>
   </body>
 </html>
-
-
-
